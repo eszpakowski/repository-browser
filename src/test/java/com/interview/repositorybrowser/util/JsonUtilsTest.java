@@ -1,0 +1,34 @@
+package com.interview.repositorybrowser.util;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.interview.repositorybrowser.adapter.outbound.http.dto.RepositoryDTO;
+import com.interview.repositorybrowser.adapter.outbound.http.dto.RepositorySearchResponseDTO;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class JsonUtilsTest {
+    private static final String REPO_NAME = "repo-name";
+    private static final String USER_LOGIN = "userLogin";
+    private static final String REPOSITORIES_EXAMPLE_BODY = "{\"total_count\":1,\"incomplete_results\":false,\"items\":[{\"id\":33535160,\"node_id\":\"MDEwOlJlcG9aXRvcnkzMzUzNTIxNjA=\",\"name\":\"repo-name\",\"full_name\":\"userLogin/repo-name\",\"private\":false,\"owner\":{\"login\":\"userLogin\",\"id\":424407,\"node_id\":\"MDQ6VXNlcQyNDQwNw==\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/424407?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/userLogin\",\"html_url\":\"https://github.com/userLogin\",\"followers_url\":\"https://api.github.com/users/userLogin/followers\",\"following_url\":\"https://api.github.com/users/userLogin/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/userLogin/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/userLogin/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/userLogin/subscriptions\",\"organizations_url\":\"https://api.github.com/users/userLogin/orgs\",\"repos_url\":\"https://api.github.com/users/userLogin/repos\",\"events_url\":\"https://api.github.com/users/userLogin/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/userLogin/received_events\",\"type\":\"User\",\"site_admin\":false},\"html_url\":\"https://github.com/userLogin/repo-name\",\"description\":\"Exercises from Web Development with Clojure (3rd edition) \",\"fork\":false,\"url\":\"https://api.github.com/repos/userLogin/repo-name\",\"forks_url\":\"https://api.github.com/repos/userLogin/repo-name/forks\",\"keys_url\":\"https://api.github.com/repos/userLogin/repo-name/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/userLogin/repo-name/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/userLogin/repo-name/teams\",\"hooks_url\":\"https://api.github.com/repos/userLogin/repo-name/hooks\",\"issue_events_url\":\"https://api.github.com/repos/userLogin/repo-name/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/userLogin/repo-name/events\",\"assignees_url\":\"https://api.github.com/repos/userLogin/repo-name/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/userLogin/repo-name/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/userLogin/repo-name/tags\",\"blobs_url\":\"https://api.github.com/repos/userLogin/repo-name/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/userLogin/repo-name/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/userLogin/repo-name/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/userLogin/repo-name/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/userLogin/repo-name/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/userLogin/repo-name/languages\",\"stargazers_url\":\"https://api.github.com/repos/userLogin/repo-name/stargazers\",\"contributors_url\":\"https://api.github.com/repos/userLogin/repo-name/contributors\",\"subscribers_url\":\"https://api.github.com/repos/userLogin/repo-name/subscribers\",\"subscription_url\":\"https://api.github.com/repos/userLogin/repo-name/subscription\",\"commits_url\":\"https://api.github.com/repos/userLogin/repo-name/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/userLogin/repo-name/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/userLogin/repo-name/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/userLogin/repo-name/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/userLogin/repo-name/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/userLogin/repo-name/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/userLogin/repo-name/merges\",\"archive_url\":\"https://api.github.com/repos/userLogin/repo-name/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/userLogin/repo-name/downloads\",\"issues_url\":\"https://api.github.com/repos/userLogin/repo-name/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/userLogin/repo-name/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/userLogin/repo-name/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/userLogin/repo-name/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/userLogin/repo-name/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/userLogin/repo-name/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/userLogin/repo-name/deployments\",\"created_at\":\"2021-02-02T16:27:04Z\",\"updated_at\":\"2022-03-05T12:05:02Z\",\"pushed_at\":\"2021-02-11T21:53:35Z\",\"git_url\":\"git://github.com/userLogin/repo-name.git\",\"ssh_url\":\"git@github.com:userLogin/repo-name.git\",\"clone_url\":\"https://github.com/userLogin/repo-name.git\",\"svn_url\":\"https://github.com/userLogin/repo-name\",\"homepage\":\"\",\"size\":70,\"stargazers_count\":1,\"watchers_count\":1,\"language\":\"Clojure\",\"has_issues\":true,\"has_projects\":true,\"has_downloads\":true,\"has_wiki\":true,\"has_pages\":false,\"has_discussions\":false,\"forks_count\":1,\"mirror_url\":null,\"archived\":false,\"disabled\":false,\"open_issues_count\":0,\"license\":null,\"allow_forking\":true,\"is_template\":false,\"web_commit_signoff_required\":false,\"topics\":[],\"visibility\":\"public\",\"forks\":1,\"open_issues\":0,\"watchers\":1,\"default_branch\":\"master\",\"score\":1.0}]}";
+
+    @Test
+    void shouldReadValue() {
+        RepositorySearchResponseDTO result =
+                JsonUtils.readValue(new TypeReference<>() {
+                }, REPOSITORIES_EXAMPLE_BODY);
+
+        assertAll(
+                () -> assertEquals(1, result.getTotalCount()),
+                () -> assertFalse(result.isIncomplete()),
+                () -> assertEquals(1, result.getRepositories().size())
+        );
+
+        RepositoryDTO repositoryDTO = result.getRepositories().get(0);
+        assertAll(
+                () -> assertEquals(REPO_NAME, repositoryDTO.getName()),
+                () -> assertEquals("https://github.com/userLogin/repo-name", repositoryDTO.getUrl()),
+                () -> assertEquals(USER_LOGIN, repositoryDTO.getOwnerLogin())
+        );
+    }
+}
