@@ -17,9 +17,12 @@ public class RepositoryService {
     private RepositoryClient repositoryClient;
 
     public List<Repository> listRepositories(String userLogin, RepositoryType repository) {
-        if (StringUtils.isEmpty(userLogin) || repository == null) {
-            throw new IllegalArgumentException(
-                    String.format("[userLogin=%s, repository=%s]", userLogin, repository));
+        if (StringUtils.isEmpty(userLogin)) {
+            throw new IllegalArgumentException("No user login provided!");
+        }
+
+        if (repository == null) {
+            throw new IllegalArgumentException("No valid repository type provided!");
         }
 
         switch (repository) {

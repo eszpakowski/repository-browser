@@ -15,8 +15,8 @@ public class ResponseValidationUtils {
         }
 
         switch (httpResponse.statusCode()) {
-            case 400 -> throw new BadRequestException();
-            case 422 -> throw new UserNotFoundException();
+            case 400 -> throw new BadRequestException(httpResponse.body());
+            case 422 -> throw new UserNotFoundException("The user does not exist!");
         }
     }
 }
