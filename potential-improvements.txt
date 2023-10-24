@@ -1,0 +1,6 @@
+Potential improvements:
+- add web security as well as GitHub authentication (to get over the throttling limit)
+- add pagination to result handling (important if repository search returns more than 100 results)
+- extract constants like GitHub URLs to application.properties file
+- improve exception handling for async calls (if only some of the requests fail we should produce a report containing
+status of each of the queries)
