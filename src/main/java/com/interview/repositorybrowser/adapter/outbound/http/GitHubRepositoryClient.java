@@ -59,8 +59,8 @@ public class GitHubRepositoryClient implements RepositoryClient {
      *
      * @param userLogin owner of repository
      * @return list of all repositories owned by userLogin, includes branch information
-     * <a href="https://docs.github.com/en/rest/search/search?apiVersion=2022-11-28#search-repositories">...</a>
-     * <a href="https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28#list-branches">...</a>
+     * <a href="https://docs.github.com/en/rest/search/search?apiVersion=2022-11-28#search-repositories">search-repositories</a>
+     * <a href="https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28#list-branches">list-branches</a>
      */
     @Override
     public List<Repository> fetchRepositories(String userLogin) {
@@ -154,7 +154,7 @@ public class GitHubRepositoryClient implements RepositoryClient {
                 .map(GitHubRepositoryClient::parseBranchList)
                 .flatMap(Collection::stream)
                 .collect(Collectors.groupingBy(
-                        branch -> extractBranchName(branch.getUrl()),
+                        branch -> extractRepoName(branch.getUrl()),
                         Collectors.mapping(branch -> branch, toList())));
     }
 
@@ -163,9 +163,9 @@ public class GitHubRepositoryClient implements RepositoryClient {
         }, httpResponse.body());
     }
 
-    private static String extractBranchName(String url) {
-        //Branch name is the third section from the end
-        // e.g. https://github.com/userLogin/branchName/branches/sha
+    private static String extractRepoName(String url) {
+        //Repository name is the third section from the end
+        // e.g. https://github.com/userLogin/repoName/branches/sha
         String[] urlSections = url.split(F_SLASH);
         return urlSections[urlSections.length - 3];
     }
